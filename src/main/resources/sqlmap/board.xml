@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<mapper namespace="boardDAO">
+
+    <select id="list" resultType="boardVO">
+        SELECT * FROM board ORDER BY seq
+    </select>
+
+    <select id="select" parameterType="long" resultType="boardVO">
+        SELECT * FROM board WHERE seq = #{seq}
+    </select>
+
+    <update id="insert" parameterType="boardVO" returnType="long">
+        INSERT INTO board (title, content, writer, password, regDate, hit) VALUES (#{title}, #{content}, #{writer}, #{password}, SYSDATE, 0);
+
+        <selectKey keyProperty="seq" resultType="Integer">
+            SELECT NVL(MAX(seq), 0) FROM board
+        </selectKey>
+    </update>
+
+    <update id="updateHit" parameterType="int">
+
+    </update>
+
+</mapper>
